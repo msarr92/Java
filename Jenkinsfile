@@ -1,9 +1,32 @@
-node{
-  stage('SCM Checkout'){
-    git 'https://github.com/msarr92/Java'
-  }
-  stage('Compile-Package'){
-    def mvnHome = tool name: 'maven-3', type: 'maven'
-    sh "${mvnHome}/bin/mvn package"
-  }
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Build App'
+            }
+        }
+
+	stage('Test') {
+            steps {
+                echo 'Test App'
+            }
+        }
+
+	stage('Deploy') {
+            steps {
+                echo 'Deploy App'
+            }
+        }
+    }
+
+    post 
+    {
+        always 
+        {
+           emailext body: 'Summary', subject: 'Pipeline Status', to: 'msarr091@gmail.com'
+        }
+    }
+
 }
